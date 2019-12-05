@@ -1,65 +1,105 @@
 package bsu.rfe.java.group8.lab3.Kedyshko.var7;
 
 import javax.swing.table.AbstractTableModel;
+
 @SuppressWarnings("serial")
-public class GornerTableModel extends AbstractTableModel {
+public class GornerTableModel extends AbstractTableModel
+{
     private Double[] coefficients;
     private Double from;
     private Double to;
     private Double step;
-    public GornerTableModel(Double from, Double to, Double step,
-                            Double[] coefficients) {
+    public GornerTableModel(Double from, Double to, Double step, Double[] coefficients)
+    {
         this.from = from;
         this.to = to;
         this.step = step;
         this.coefficients = coefficients;
     }
-    public Double getFrom() {
-        return from;
+    public Double getFrom() {        return from;    }
+    public Double getTo() {        return to;    }
+    public Double getStep() {        return step;    }
+    public int getColumnCount() {        return 3;    }
+
+    public int getRowCount()
+    {
+        return new Double(Math.ceil((to-from)/step)).intValue() + 1;
     }
-    public Double getTo() {
-        return to;
+
+    public int checkSequence(double number)
+    {
+        int flag = 0;
+        int k = 0;
+        int counter = 0;
+
+        int dim = String.valueOf(Math.abs(number)).length();
+        int[] massiveNumber = new int[dim];
+        for(int i = 0; i < dim - k; i++)
+        {
+            if(String.valueOf(Math.abs(number)).charAt(i) > 47)
+                massiveNumber[i] =  String.valueOf(Math.abs(number)).charAt(i + k) - 48;
+            else
+            {
+                k++;
+                massiveNumber[i] =  String.valueOf(Math.abs(number)).charAt(i + k) - 48;
+            }
+        }
+
+        for (int i = 0; i < dim - 1; i++)
+        {
+            System.out.println(counter + " " + massiveNumber[i]);
+            if (massiveNumber[i] == massiveNumber[i + 1] - 1)
+            {
+                counter++;
+            }
+            else
+                counter = 0;
+            if (counter >= 2)
+            {
+                flag = 1;
+                break;
+            }
+        }
+        return flag;
     }
-    public Double getStep() {
-        return step;
-    }
-    public int getColumnCount() {
-// В данной модели два столбца
-        return 2;
-    }
-    public int getRowCount() {
-// Вычислить количество точек между началом и концом отрезка
-// исходя из шага табулирования
-        return new Double(Math.ceil((to-from)/step)).intValue()+1;
-    }
-    public Object getValueAt(int row, int col) {
-// Вычислить значение X как НАЧАЛО_ОТРЕЗКА + ШАГ*НОМЕР_СТРОКИ
+
+    public Object getValueAt(int row, int col)
+    {
         double x = from + step*row;
-        if (col==0) {
-// Если запрашивается значение 1-го столбца, то это X
+        Double result = -123.456;
+        if (col==0)
+        {
             return x;
-        } else {
+        }
+        if (col==1)
+        {
 // Если запрашивается значение 2-го столбца, то это значение
 // многочлена
-            Double result = 0.0;
+
 // Вычисление значения в точке по схеме Горнера.
 // Вспомнить 1-ый курс и реализовать
 // ...
             return result;
         }
-    }
-    public String getColumnName(int col) {
-        switch (col) {
-            case 0:
-// Название 1-го столбца
-                return "Значение X";
-            default:
-// Название 2-го столбца
-                return "Значение многочлена";
+        else
+        {
+            return checkSequence(result);
         }
     }
-    public Class<?> getColumnClass(int col) {
-// И в 1-ом и во 2-ом столбце находятся значения типа Double
+    public String getColumnName(int col)
+    {
+        switch (col)
+        {
+            case 0:
+                return "Значение X";
+            case 1:
+                return "Значение многочлена";
+            default:
+                return "Последовательный ряд?";
+        }
+    }
+    public Class<?> getColumnClass(int col)
+    {
         return Double.class;
     }
 }
