@@ -47,7 +47,6 @@ public class GornerTableModel extends AbstractTableModel
 
         for (int i = 0; i < dim - 1; i++)
         {
-            System.out.println(counter + " " + massiveNumber[i]);
             if (massiveNumber[i] == massiveNumber[i + 1] - 1)
             {
                 counter++;
@@ -66,19 +65,17 @@ public class GornerTableModel extends AbstractTableModel
     public Object getValueAt(int row, int col)
     {
         double x = from + step*row;
-        Double result = -123.456;
+        Double result = 0.0;
+        for(int i = 0; i < coefficients.length; i++)
+        {
+            result += Math.pow(x, coefficients.length-1-i)*coefficients[i];
+        }
         if (col==0)
         {
             return x;
         }
         if (col==1)
         {
-// Если запрашивается значение 2-го столбца, то это значение
-// многочлена
-
-// Вычисление значения в точке по схеме Горнера.
-// Вспомнить 1-ый курс и реализовать
-// ...
             return result;
         }
         else
