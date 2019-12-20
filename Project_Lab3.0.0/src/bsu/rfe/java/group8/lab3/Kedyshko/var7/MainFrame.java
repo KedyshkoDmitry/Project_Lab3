@@ -95,7 +95,7 @@ public class MainFrame extends JFrame
             }
         };
         searchValueMenuItem = tableMenu.add(searchValueAction);
-        searchValueMenuItem.setEnabled(false);
+        searchValueMenuItem.setEnabled(true);
 
         Action aboutProgramAction = new AbstractAction("О программе")
         {
@@ -238,8 +238,7 @@ public class MainFrame extends JFrame
             out.println("====================================================");
             for (int i = 0; i < data.getRowCount(); i++)
             {
-                out.println("Значение в точке " + data.getValueAt(i, 0)
-                        + " равно " + data.getValueAt(i, 1));
+                out.println("Значение в точке " + data.getValueAt(i, 0) + " равно " + data.getValueAt(i, 1));
             }
             out.close();
         } catch (FileNotFoundException e) { }
